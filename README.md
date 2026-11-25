@@ -59,11 +59,12 @@ The build includes the Unity player files beside the executable. Zip the entire 
 
 A manual workflow is included at `.github/workflows/build-windows.yml`. After pushing the project to GitHub:
 
-1. Add the Unity license as a repository secret named `UNITY_LICENSE` (the workflow uses GameCI).
-2. Open **Actions → Build Windows x64 → Run workflow**.
-3. Download the `WHITE_NOISE-Windows-x64` artifact from the completed run.
+1. Activate Unity Personal in Unity Hub and obtain the Unity license file for the GameCI runner.
+2. Add these repository Actions secrets: `UNITY_LICENSE` (the full contents of the `.ulf` file), `UNITY_EMAIL` (your Unity account email), and `UNITY_PASSWORD` (your Unity account password). Never place these values in source files, issues, or chat messages.
+3. Open **Actions → Build Windows x64 → Run workflow**.
+4. Download the `WHITE_NOISE-Windows-x64` artifact from the completed run.
 
-The workflow cannot build until a valid Unity license secret is configured.
+The workflow cannot build until the required Unity secrets are configured. Personal license activation details are documented by GameCI: https://game.ci/docs/github/activation/ .
 
 ## Technical notes
 
