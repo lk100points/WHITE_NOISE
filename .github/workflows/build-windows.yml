@@ -1,0 +1,35 @@
+name: Build Windows x64
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build WHITE NOISE for Windows
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build with Unity
+        uses: game-ci/unity-builder@v4
+        env:
+          UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
+        with:
+          targetPlatform: StandaloneWindows64
+          unityVersion: 6000.3.29f1
+          buildMethod: WhiteNoiseBuild.BuildWindows
+
+      - name: Package Windows build
+        run: |
+          test -f Build/Windows/WHITE_NOISE.exe
+          cd Build
+          zip -r WHITE_NOISE-Windows-x64.zip Windows
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: WHITE_NOISE-Windows-x64
+          path: Build/WHITE_NOISE-Windows-x64.zip
+          if-no-files-found: error
+          compression-level: 0
