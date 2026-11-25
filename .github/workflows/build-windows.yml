@@ -2,6 +2,9 @@ name: Build Windows x64
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
 
 jobs:
   build:
@@ -19,7 +22,7 @@ jobs:
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
         with:
           targetPlatform: StandaloneWindows64
-          unityVersion: 6000.3.27f2
+          unityVersion: 6000.0.85f2
           buildMethod: WhiteNoiseBuild.BuildWindows
 
       - name: Package Windows build
