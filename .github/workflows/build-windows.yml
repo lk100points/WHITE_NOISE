@@ -26,15 +26,22 @@ jobs:
           buildMethod: WhiteNoiseBuild.BuildWindows
 
       - name: Package Windows build
+        shell: bash
         run: |
+          set -euo pipefail
           test -f Build/Windows/WHITE_NOISE.exe
+          test -d Build/Windows/WHITE_NOISE_Data
+          ARCHIVE="$RUNNER_TEMP/WHITE_NOISE-Windows-x64.zip"
+          rm -f "$ARCHIVE"
           cd Build
-          zip -r WHITE_NOISE-Windows-x64.zip Windows
+          zip -r "$ARCHIVE" Windows
+          test -s "$ARCHIVE"
+          ls -lh "$ARCHIVE"
 
       - name: Upload build artifact
         uses: actions/upload-artifact@v4
         with:
           name: WHITE_NOISE-Windows-x64
-          path: Build/WHITE_NOISE-Windows-x64.zip
+          path: ${{ runner.temp }}/WHITE_NOISE-Windows-x64.zip
           if-no-files-found: error
           compression-level: 0
